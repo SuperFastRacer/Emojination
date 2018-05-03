@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import styles from './modal.module.css';
+import './modal.module.css';
 
 class Modal extends React.Component {
   render() {
@@ -11,8 +11,8 @@ class Modal extends React.Component {
     }
 
     return (
-      <div className="backdrop" style={styles.backdropStyle}>
-        <div className="modal" style={styles.modalStyle}>
+      <div className="backdrop">
+        <div className="modal">
           {this.props.children}
 
           <div className={"footer"}>
