@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
-import Modal from './Modal';
+import Modal from './Modal/Modal';
 
 export default class App extends Component {
   constructor(props) {
