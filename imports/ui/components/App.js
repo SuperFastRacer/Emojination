@@ -1,14 +1,28 @@
-import React from 'react'
-import Footer from './Footer'
-import AddTodo from '../containers/AddTodo'
-import VisibleTodoList from '../containers/VisibleTodoList'
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import { Meteor } from 'meteor/meteor';
 
-const App = () => (
-  <div className="todocontainer container">
-    <AddTodo />
-    <VisibleTodoList />
-    <Footer />
-  </div>
-)
+export default class App extends Component {
+  constructor(props) {
+    super(props);
 
-export default App
+    this.state = {
+      hasData: false,
+    };
+  }
+
+
+  render() {
+    return (
+      <div className="container">
+        <header>
+          <h1>Todo List</h1>
+        </header>
+
+        <ul>
+          <li>Hello</li>
+        </ul>
+      </div>
+    );
+  }
+}

@@ -21,3 +21,8 @@ body {
   border: none;
   padding: 10px;
 }
+
+.login{
+  background-color: red;
+  width: 100%;
+}
