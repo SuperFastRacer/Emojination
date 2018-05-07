@@ -29,12 +29,13 @@ export default class App extends Component {
           <li>Hello</li>
         </ul>
 
-        <button onClick={this.toggleModal}>
+        <div onClick={this.toggleModal} className={"profile"}>
           Open the modal
-        </button>
+        </div>
         <Modal show={this.state.isOpen}
         onClose={this.toggleModal}>
-          Here is some content to the modal
+          <h2>Namn Namnsson</h2>
+          <img src={"https://www.w3schools.com/images/w3schools_green.jpg"} />
         </Modal>
       </div>
     );

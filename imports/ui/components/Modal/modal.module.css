@@ -1,18 +1,40 @@
 /*The gray background*/
-.backdrop{
+/*.backdrop{
   position: 'fixed';
+  height: 100%;
   height: 100vh;
   width: 100vw;
   background-color: rgba(0,0,0,0.3);
   padding: 50;
-}
+}*/
 
 /*The modal "window"*/
 .modal{
-  background-color: white;
+  position: absolute;
+  top:0;
+  background-color: #B1D7CC;
   border-radius: : 5;
-  max-width: : 500px;
-  min-height: : 300px;
+  height: 100vh;
+  width: 100%;
+  /*max-width: : 500px;
+  min-height: : 300px;*/
   margin: '0 auto';
   padding: 30;
+}
+
+.close{
+  position: absolute;
+  right: 0;
+  top: 0;
+  background-color: #6ABEA7;
+  width: 2em;
+  height: 2em;
+  display: table;
+}
+.cross{
+  color: white;
+  margin: auto;
+  text-align:center;
+  vertical-align: middle;
+  display: table-cell;
 }
