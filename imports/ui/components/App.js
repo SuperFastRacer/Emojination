@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import Modal from './Modal/Modal';
 
+
+
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -22,15 +24,10 @@ export default class App extends Component {
     return (
       <div className="container">
         <header>
-          <h1>Todo List</h1>
         </header>
 
-        <ul>
-          <li>Hello</li>
-        </ul>
-
         <div onClick={this.toggleModal} className={"profile"}>
-          Open the modal
+          <img src={"https://www.w3schools.com/images/w3schools_green.jpg"}/>
         </div>
         <Modal show={this.state.isOpen}
         onClose={this.toggleModal}>
