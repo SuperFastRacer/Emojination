@@ -26,3 +26,8 @@ body {
   background-color: red;
   width: 100%;
 }
+
+.profile-picture {
+  height: 375px;
+  width: 630px;
+}

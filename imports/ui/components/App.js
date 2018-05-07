@@ -1,28 +1,68 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
+import { withTracker } from 'meteor/react-meteor-data';
+import { withHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-export default class App extends Component {
-  constructor(props) {
+class App extends Component {
+
+  constructor(props){
     super(props);
-
-    this.state = {
-      hasData: false,
-    };
+    this.state = this.getMeteorData();
+    this.logout = this.logout.bind(this);
   }
 
+  getMeteorData(){
+    return { isAuthenticated: Meteor.userId() !== null };
+  }
 
-  render() {
+  componentWillMount(){
+    if (!this.state.isAuthenticated) {
+      this.props.history.push('/login');
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    if (!this.state.isAuthenticated) {
+      this.props.history.push('/login');
+    }
+  }
+
+  logout(e){
+    console.log('logout called')
+    e.preventDefault();
+    Meteor.logout( (err) => {
+        if (err) {
+            console.log( 'logout error: ' + err.reason );
+        } else {
+          console.log('trying to redirect') 
+            this.props.history.push('/login');
+        }
+    });
+  }
+
+  render()  {
     return (
-      <div className="container">
-        <header>
-          <h1>Todo List</h1>
-        </header>
+      <div>
+        <div className="container">
+          <h2 className="text-center">
+            {Meteor.user() ? 'Welcome, ' + this.props.currentUser.profile.name : ''}
+          </h2>
 
-        <ul>
-          <li>Hello</li>
-        </ul>
+          {Meteor.user() ? <img className="profile-image" src={this.props.currentUser.profile.picture}/> : ''} 
+
+          <a href="#" className="waves-effect waves-light btn" onClick={this.logout}>Logout</a>
+        </div>
       </div>
-    );
+
+    )
   }
 }
+
+export default withTracker(() => {
+
+  return {
+    currentUser: Meteor.user(),
+  };
+})(App);

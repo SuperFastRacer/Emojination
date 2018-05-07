@@ -1,0 +1,41 @@
+body {
+    background-color: white;
+    background-image: none;
+}
+
+.signup-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.signup-header {
+    margin-top: 20%;
+    text-align: center;
+}
+
+.login-form {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.center {
+    display:flex;
+    justify-content: center;
+}
+
+.input {
+    width: 250px;
+    height: 25px;
+    margin: 15px;
+}
+
+.signup-btn {
+    margin-top: 35px;
+}
+
+.error-message {
+    color: red;
+    
+}
