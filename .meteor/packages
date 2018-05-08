@@ -26,6 +26,5 @@ service-configuration
 accounts-google
 materialize:materialize
 http
-hedcet:cordova-google-plus-native-sign-in
 accounts-facebook
 fourseven:scss

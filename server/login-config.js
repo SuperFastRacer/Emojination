@@ -1,6 +1,5 @@
 import { Accounts } from 'meteor/accounts-base';
 import { ServiceConfiguration } from 'meteor/service-configuration';
-import { HTTP } from 'meteor/http'
 import 'bas-meteor-facebook-login';
 
 // Remove previous configurations

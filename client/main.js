@@ -11,13 +11,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 Meteor.startup(() => {
 
-    // Required for native facebook login (?)
-    if(Meteor.isCordova && facebookConnectPlugin) { 
-        facebookConnectPlugin.activateApp(function(success) 
-         {console.log(success)},function(error) { console.log(error)} );
-      }
-
-
     render(renderRoutes(), document.getElementById('root'));
 
 });

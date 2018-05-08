@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { withHistory, Link } from 'react-router-dom'
 import { withTracker } from 'meteor/react-meteor-data'
 import PropTypes from 'prop-types';
-import { FB_API } from 'bas-meteor-facebook-login';
 import './login.scss'
 
 class Login extends Component {
