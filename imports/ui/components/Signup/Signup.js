@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withHistory, Link } from 'react-router-dom';
 import { Accounts } from 'meteor/accounts-base';
 import PropTypes from 'prop-types';
-import './signup.css';
+import './signup.scss';
 
 class Signup extends Component {
   constructor(props) {

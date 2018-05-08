@@ -30,13 +30,11 @@ class App extends Component {
   }
 
   logout(e){
-    console.log('logout called')
     e.preventDefault();
     Meteor.logout( (err) => {
         if (err) {
             console.log( 'logout error: ' + err.reason );
         } else {
-          console.log('trying to redirect') 
             this.props.history.push('/login');
         }
     });
@@ -50,7 +48,7 @@ class App extends Component {
             {Meteor.user() ? 'Welcome, ' + this.props.currentUser.profile.name : ''}
           </h2>
 
-          {Meteor.user() ? <img className="profile-image" src={this.props.currentUser.profile.picture}/> : ''} 
+          {Meteor.user() ? <img className="profile-picture" src={this.props.currentUser.profile.picture}/> : ''} 
 
           <a href="#" className="waves-effect waves-light btn" onClick={this.logout}>Logout</a>
         </div>

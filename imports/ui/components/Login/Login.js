@@ -3,7 +3,7 @@ import { withHistory, Link } from 'react-router-dom'
 import { withTracker } from 'meteor/react-meteor-data'
 import PropTypes from 'prop-types';
 import { FB_API } from 'bas-meteor-facebook-login';
-import './login.css'
+import './login.scss'
 
 class Login extends Component {
   constructor(props) {
@@ -11,10 +11,10 @@ class Login extends Component {
     this.state = {
       error: ''
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handlePasswordLogin = this.handlePasswordLogin.bind(this);
   }
 
-  handleSubmit = (e) => {
+  handlePasswordLogin = (e) => {
     e.preventDefault();
     let email = document.getElementById('login-email').value;
     let password = document.getElementById('login-password').value;
@@ -32,23 +32,6 @@ class Login extends Component {
 
   handleGoogleLogin = (e) => {
     e.preventDefault();
-   /* if (Meteor.isCordova) { // signIn through cordova
-      Meteor.cordova_g_plus({
-        cordova_g_plus: true,
-        profile: ['email", "profile'],
-        webClientId: Meteor.settings.public.oAuth.google.clientId
-      }, (error) => {
-        if (error) {
-          // error handling code
-          console.log('Error while logging in with google+ through cordova: ' + error.reason);
-        }
-        else {
-          this.props.history.push('/');
-        }
-      });
-    }*/
-    // Sign in through web
-   // else {
       Meteor.loginWithGoogle({ requestPermissions: ['email', 'profile'], requestOfflineToken: true }, (err) => {
         if (err) {
           this.setState({
@@ -58,32 +41,11 @@ class Login extends Component {
           this.props.history.push('/');
         }
       });
-    //}
   }
 
 
   handleFacebookLogin = (e) => {
     e.preventDefault();
-
-    /*if (Meteor.isCordova) {
-      //Log in with cordova
-      // Login with Facebook
-      FB_API.login((err) => {
-        if (err) {
-          this.setState({
-            error: err.reason
-          });
-
-        } else {
-          this.props.history.push('/');
-        }
-      });
-
-    }
-
-    // Sign in through web
-    else {*/
-
       Meteor.loginWithFacebook({ requestPermissions: ['email', 'public_profile'/*, 'user_friends'*/], requestOfflineToken:true }, (err) => {
         if (err) {
           this.setState({
@@ -93,7 +55,6 @@ class Login extends Component {
           this.props.history.push('/');
         }
       });
-   // }
   }
 
 
@@ -114,7 +75,7 @@ class Login extends Component {
 
         <form id="login-form"
           className="login-form"
-          onSubmit={this.handleSubmit}>
+          onSubmit={this.handlePasswordLogin}>
           <div className="center input">
             <input type="email"
               id="login-email"

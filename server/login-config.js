@@ -51,6 +51,7 @@ ServiceConfiguration.configurations.upsert(
 // Add email and profile picture URL to the user during facebook and google login
 Accounts.onCreateUser((options, user) => {
 
+  // Handle user creation from Facebook
   if (user.services.facebook) {
     user.emails = [{ address: user.services.facebook.email, verified: true }];
 
@@ -66,6 +67,7 @@ Accounts.onCreateUser((options, user) => {
 
   }
 
+  //Handle user creation from Google 
   else if (user.services.google) {
 
     if (options.profile) {
