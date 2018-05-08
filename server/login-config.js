@@ -3,7 +3,6 @@ import { ServiceConfiguration } from 'meteor/service-configuration';
 import { HTTP } from 'meteor/http'
 import 'bas-meteor-facebook-login';
 
-
 // Remove previous configurations
 ServiceConfiguration.configurations.remove(
   { service: 'facebook' }
@@ -12,14 +11,22 @@ ServiceConfiguration.configurations.remove(
   { service: 'google' }
 )
 
-// Add new facebook configuration (Emojination Test App)
+// Configure oauth
+const oauthConfig = Meteor.settings.private.oauth;
+
+if (!oauthConfig) {
+  console.warn('No Meteor.settings.oauth. Define API config in settings.json'); 
+
+} else {
+
+  // Add new facebook configuration (Emojination Test App)
 ServiceConfiguration.configurations.upsert(
   { service: 'facebook' },
   {
     $set: {
-      //loginStyle: "popup",
-      appId: Meteor.settings.private.oAuth.facebook.appId,
-      secret: Meteor.settings.private.oAuth.facebook.secret
+      loginStyle: oauthConfig.facebook.loginStyle,
+      appId: oauthConfig.facebook.appId,
+      secret: oauthConfig.facebook.secret
     }
   }
 );
@@ -29,12 +36,16 @@ ServiceConfiguration.configurations.upsert(
   { service: 'google' },
   {
     $set: {
-      //loginStyle: "popup",
-      clientId: Meteor.settings.private.oAuth.google.clientId,
-      secret: Meteor.settings.private.oAuth.google.secret
+      loginStyle: oauthConfig.google.loginStyle,
+      clientId: oauthConfig.google.clientId,
+      secret: oauthConfig.google.secret
     }
   }
 );
+}
+
+
+
 
 
 // Add email and profile picture URL to the user during facebook and google login
@@ -50,11 +61,7 @@ Accounts.onCreateUser((options, user) => {
         name: options.profile.name,
         picture: options.profile.picture
       }
-      //user.profile.picture = options.profile.picture;
-      //user.profile = options.profile;
-
     }
-
     return user;
 
   }
@@ -65,21 +72,12 @@ Accounts.onCreateUser((options, user) => {
 
       options.profile.picture = user.services.google.picture;
 
-      // TODO: Add contacts to user profile?.
-      //options.profile.contacts = ;
-
-      //user.profile = options.profile;
-
       user.profile = {
         name: options.profile.name,
         picture: options.profile.picture
       }
-
-
     }
-
     return user;
-
   }
 
   //user.services.password

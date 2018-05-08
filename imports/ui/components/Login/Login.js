@@ -32,11 +32,11 @@ class Login extends Component {
 
   handleGoogleLogin = (e) => {
     e.preventDefault();
-    if (Meteor.isCordova) { // signIn through cordova
+   /* if (Meteor.isCordova) { // signIn through cordova
       Meteor.cordova_g_plus({
         cordova_g_plus: true,
         profile: ['email", "profile'],
-        webClientId: Meteor.settings.oauth.public.google.clientId
+        webClientId: Meteor.settings.public.oAuth.google.clientId
       }, (error) => {
         if (error) {
           // error handling code
@@ -46,10 +46,10 @@ class Login extends Component {
           this.props.history.push('/');
         }
       });
-    }
+    }*/
     // Sign in through web
-    else {
-      Meteor.loginWithGoogle({ requestPermissions: ['email', 'profile'] }, (err) => {
+   // else {
+      Meteor.loginWithGoogle({ requestPermissions: ['email', 'profile'], requestOfflineToken: true }, (err) => {
         if (err) {
           this.setState({
             error: err.reason
@@ -58,14 +58,14 @@ class Login extends Component {
           this.props.history.push('/');
         }
       });
-    }
+    //}
   }
 
 
   handleFacebookLogin = (e) => {
     e.preventDefault();
 
-    if (Meteor.isCordova) {
+    /*if (Meteor.isCordova) {
       //Log in with cordova
       // Login with Facebook
       FB_API.login((err) => {
@@ -82,9 +82,9 @@ class Login extends Component {
     }
 
     // Sign in through web
-    else {
+    else {*/
 
-      Meteor.loginWithFacebook({ requestPermissions: ['email', 'public_profile'/*, 'user_friends'*/] }, (err) => {
+      Meteor.loginWithFacebook({ requestPermissions: ['email', 'public_profile'/*, 'user_friends'*/], requestOfflineToken:true }, (err) => {
         if (err) {
           this.setState({
             error: err.reason
@@ -93,7 +93,7 @@ class Login extends Component {
           this.props.history.push('/');
         }
       });
-    }
+   // }
   }
 
 
