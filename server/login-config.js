@@ -6,9 +6,9 @@ ServiceConfiguration.configurations.remove({ service: "facebook" });
 ServiceConfiguration.configurations.remove({ service: "google" });
 
 // Configure oauth
-//const oauthConfig = Meteor.settings.private.oauth;
+const oauthConfig = Meteor.settings.private;
 
-if (/*!oauthConfig*/true) {
+if (typeof oauthConfig === undefined) {
   console.warn(
     "No Meteor.settings.oauth. Define API configurations in settings.json"
   );
@@ -18,9 +18,9 @@ if (/*!oauthConfig*/true) {
     { service: "facebook" },
     {
       $set: {
-        loginStyle: oauthConfig.facebook.loginStyle,
-        appId: oauthConfig.facebook.appId,
-        secret: oauthConfig.facebook.secret
+        loginStyle: oauthConfig.oauth.facebook.loginStyle,
+        appId: oauthConfig.oauth.facebook.appId,
+        secret: oauthConfig.oauth.facebook.secret
       }
     }
   );
@@ -30,9 +30,9 @@ if (/*!oauthConfig*/true) {
     { service: "google" },
     {
       $set: {
-        loginStyle: oauthConfig.google.loginStyle,
-        clientId: oauthConfig.google.clientId,
-        secret: oauthConfig.google.secret
+        loginStyle: oauthConfig.oauth.google.loginStyle,
+        clientId: oauthConfig.oauth.google.clientId,
+        secret: oauthConfig.oauth.google.secret
       }
     }
   );

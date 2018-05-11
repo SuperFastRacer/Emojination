@@ -102,35 +102,24 @@ class App extends Component {
   render() {
     return (
       <div>
-        <header>{this.renderTopbar()}</header>
-
-        <Modal show={this.state.isOpen} onClose={this.toggleModal}>
-          <h2>Namn Namnsson</h2>
-          <img src={"https://www.w3schools.com/images/w3schools_green.jpg"} />
-        </Modal>
-
-        <div className="container">
-          <h2 className="text-center">
-            {Meteor.user()
-              ? "Welcome, " + this.props.currentUser.profile.name
-              : ""}
-          </h2>
-          {Meteor.user() ? (
-            <img
-              className="profile-picture"
-              src={this.props.currentUser.profile.picture}
-            />
-          ) : (
-            ""
-          )}
-          <a
-            href="#"
-            className="waves-effect waves-light btn"
-            onClick={this.logout}
-          >
-            Logout
-          </a>
-        </div>
+        {Meteor.user() ? (
+          <div className="container">
+            <header>{this.renderTopbar()}</header>
+            <Modal show={this.state.isOpen} onClose={this.toggleModal}>
+              <h2>{this.props.currentUser.profile.name}</h2>
+              <img src={this.props.currentUser.profile.picture} />
+            </Modal>
+            <a
+              href="#"
+              className="waves-effect waves-light btn"
+              onClick={this.logout}
+            >
+              Logout
+            </a>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     );
   }
