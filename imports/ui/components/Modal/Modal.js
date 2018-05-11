@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './modal.module.css';
-
+import './modal.module.scss';
 class Modal extends React.Component {
   render() {
     // Render nothing if the "show" prop is false
