@@ -1,0 +1,26 @@
+.topBar{
+  list-style-type: none;
+  margin: auto;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  width:100%;
+}
+.topList{
+  float:left;
+  flex: 2;
+  align-items: center;
+  width: 100%;
+  img {
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    max-width: 40px;
+    max-height: 40px;
+
+    &:hover{
+
+    }
+  }
+}

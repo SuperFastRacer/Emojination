@@ -1,12 +1,15 @@
+import { Meteor } from "meteor/meteor";
+import { withHistory } from "react-router-dom";
+import { withTracker } from "meteor/react-meteor-data";
+import PropTypes from "prop-types";
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import { Meteor } from "meteor/meteor";
-import { withTracker } from "meteor/react-meteor-data";
-import { withHistory } from "react-router-dom";
-import PropTypes from "prop-types";
 
-import { EmojiPins } from '../../api/api.js'
-import { EmojiMessages } from '../../api/api.js'
+import { EmojiMessages } from "../../api/api.js";
+import { EmojiPins } from "../../api/api.js";
+import Modal from "./Modal/Modal";
+
+import "./Topbar.scss";
 
 class App extends Component {
   constructor(props) {
@@ -17,13 +20,14 @@ class App extends Component {
       receiverId: "",
       emojiMapPins: this.props.emojiPins ? this.props.emojiPins : "",
       unreadMessages: this.props.emojiMessages ? this.props.emojiMessages : "",
-      isAuthenticated: Meteor.userId() !== null
+      isAuthenticated: Meteor.userId() !== null,
+      hasData: false,
+      isOpen: false
     };
 
-    this.sendMessageToServer = this.sendMessageToServer.bind(this)
+    this.sendMessageToServer = this.sendMessageToServer.bind(this);
     this.logout = this.logout.bind(this);
   }
-
 
   componentWillMount() {
     if (!this.state.isAuthenticated) {
@@ -56,7 +60,6 @@ class App extends Component {
   // will be passed down to child component (emoji keyboard)
   setEmojiToSend(emojiCode) {
     //set selectedEmoji state
-
   }
 
   unsetEmojiToSend() {
@@ -74,9 +77,38 @@ class App extends Component {
     });
   }
 
+  toggleModal = () => {
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
+  };
+
+  renderTopbar() {
+    return (
+      <ul className="topBar">
+        <li className="topList" onClick={this.toggleModal}>
+          <img className={"profile"} src="/profile_icon.png" alt="Profile" />
+        </li>
+        <li className="topList">
+          <img className={"addFriend"} src="/add_friend.png" alt="add friend" />
+        </li>
+        <li className="topList">
+          <img className={"send"} src="/send.png" alt="Send" />
+        </li>
+      </ul>
+    );
+  }
+
   render() {
     return (
       <div>
+        <header>{this.renderTopbar()}</header>
+
+        <Modal show={this.state.isOpen} onClose={this.toggleModal}>
+          <h2>Namn Namnsson</h2>
+          <img src={"https://www.w3schools.com/images/w3schools_green.jpg"} />
+        </Modal>
+
         <div className="container">
           <h2 className="text-center">
             {Meteor.user()
@@ -104,11 +136,11 @@ class App extends Component {
   }
 }
 export default withTracker(() => {
-  Meteor.subscribe('emoji_pins');
-  Meteor.subscribe('emoji_messages');
+  Meteor.subscribe("emoji_pins");
+  Meteor.subscribe("emoji_messages");
   return {
     emojiPins: EmojiPins.find({}).fetch(), //TODO: add filtering by userId
-    emojiMessages: EmojiMessages.find({read: false} ).fetch(), //TODO: add filtering so that only messages belonging to the user are fetched.
+    emojiMessages: EmojiMessages.find({ read: false }).fetch(), //TODO: add filtering so that only messages belonging to the user are fetched.
     currentUser: Meteor.user()
   };
 })(App);
