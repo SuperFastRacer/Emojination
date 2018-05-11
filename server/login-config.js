@@ -1,5 +1,6 @@
 import { Accounts } from "meteor/accounts-base";
 import { ServiceConfiguration } from "meteor/service-configuration";
+import { isNullOrUndefined } from "util";
 
 // Remove previous configurations
 ServiceConfiguration.configurations.remove({ service: "facebook" });
@@ -8,9 +9,9 @@ ServiceConfiguration.configurations.remove({ service: "google" });
 // Configure oauth
 const oauthConfig = Meteor.settings.private;
 
-if (typeof oauthConfig === undefined) {
+if (isNullOrUndefined(oauthConfig)) {
   console.warn(
-    "No Meteor.settings.oauth. Define API configurations in settings.json"
+    "No API keys found in Meteor.settings. Define API configurations in settings.json to run app with social login."
   );
 } else {
   // Add new facebook configuration (Emojination Test App)
