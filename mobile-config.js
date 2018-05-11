@@ -8,9 +8,11 @@ App.info({
     website: ''
 });
 
+/*
 App.configurePlugin('cordova-plugin-facebook4', {
     APP_ID: '124977904960859',
     APP_NAME: 'Emojination'
 });
+*/
 
 App.accessRule("*");

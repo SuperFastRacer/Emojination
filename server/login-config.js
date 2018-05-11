@@ -6,9 +6,9 @@ ServiceConfiguration.configurations.remove({ service: "facebook" });
 ServiceConfiguration.configurations.remove({ service: "google" });
 
 // Configure oauth
-const oauthConfig = Meteor.settings.private.oauth;
+//const oauthConfig = Meteor.settings.private.oauth;
 
-if (!oauthConfig) {
+if (/*!oauthConfig*/true) {
   console.warn(
     "No Meteor.settings.oauth. Define API configurations in settings.json"
   );

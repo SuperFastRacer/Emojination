@@ -11,22 +11,19 @@ import { EmojiMessages } from '../../api/api.js'
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = this.getMeteorData();
-    this.logout = this.logout.bind(this);
 
     this.state = {
       emojiToSend: "",
       receiverId: "",
       emojiMapPins: this.props.emojiPins ? this.props.emojiPins : "",
-      unreadMessages: this.props.emojiMessages ? this.props.emojiMessages : ""
+      unreadMessages: this.props.emojiMessages ? this.props.emojiMessages : "",
+      isAuthenticated: Meteor.userId() !== null
     };
 
     this.sendMessageToServer = this.sendMessageToServer.bind(this)
+    this.logout = this.logout.bind(this);
   }
 
-  getMeteorData() {
-    return { isAuthenticated: Meteor.userId() !== null };
-  }
 
   componentWillMount() {
     if (!this.state.isAuthenticated) {
