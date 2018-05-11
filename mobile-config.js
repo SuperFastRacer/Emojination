@@ -1,12 +1,16 @@
 App.info({
-  id: 'beta.Emojination',
-  name: 'Emojination',
-  description: 'State of mind with emojis',
-  author: 'LeoJesperMånsJennyMattias',
-  email: 'mns.hellgren@gmail.com',
-  website: 'http://localhost:3000'
+    id: 'com.emojination.app',
+    version: '0.0.1',
+    name: 'Emojination',
+    author: 'x',
+    description: 'Emojination app',
+    email: 'x',
+    website: ''
 });
 
-App.setPreference('BackgroundColor', '0xff0000ff');
-App.setPreference('HideKeyboardFormAccessoryBar', true);
-App.setPreference('Orientation', 'portrait');
+App.configurePlugin('cordova-plugin-facebook4', {
+    APP_ID: '124977904960859',
+    APP_NAME: 'Emojination'
+});
+
+App.accessRule("*");

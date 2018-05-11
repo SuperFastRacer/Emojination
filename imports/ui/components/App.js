@@ -1,7 +1,9 @@
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-import { Meteor } from 'meteor/meteor'
-import { withTracker } from 'meteor/react-meteor-data'
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import { Meteor } from "meteor/meteor";
+import { withTracker } from "meteor/react-meteor-data";
+import { withHistory } from "react-router-dom";
+import PropTypes from "prop-types";
 
 import { EmojiPins } from '../../api/api.js'
 import { EmojiMessages } from '../../api/api.js'
@@ -9,6 +11,8 @@ import { EmojiMessages } from '../../api/api.js'
 class App extends Component {
   constructor(props) {
     super(props);
+    this.state = this.getMeteorData();
+    this.logout = this.logout.bind(this);
 
     this.state = {
       emojiToSend: "",
@@ -18,6 +22,21 @@ class App extends Component {
     };
 
     this.sendMessageToServer = this.sendMessageToServer.bind(this)
+  }
+
+  getMeteorData() {
+    return { isAuthenticated: Meteor.userId() !== null };
+  }
+
+  componentWillMount() {
+    if (!this.state.isAuthenticated) {
+      this.props.history.push("/login");
+    }
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (!this.state.isAuthenticated) {
+      this.props.history.push("/login");
+    }
   }
 
   //standard lifecyclemethod for react
@@ -47,30 +66,42 @@ class App extends Component {
     // unset selectedEmoji state
   }
 
-
-  createMapPin() {
-    Meteor.call('emoji_pins.insert', "defaultuser", "xff3d", 60.123,20.123);
+  logout(e) {
+    e.preventDefault();
+    Meteor.logout(err => {
+      if (err) {
+        console.log("logout error: " + err.reason);
+      } else {
+        this.props.history.push("/login");
+      }
+    });
   }
-  testrenderPins() {
-    let mapPins= this.props.emojiPins
-    return mapPins.map((pin) => (
-      <li key={pin._id}>{pin.emojiId}</li>
-    ));
-  }
-
 
   render() {
     return (
-      <div className="container">
-        <header>
-          <h1>Todo List</h1>
-        </header>
-
-        <ul>
-          <li>Hello</li>
-          {this.testrenderPins()}
-        </ul>
-        <button onClick={this.createMapPin}>add pin</button>
+      <div>
+        <div className="container">
+          <h2 className="text-center">
+            {Meteor.user()
+              ? "Welcome, " + this.props.currentUser.profile.name
+              : ""}
+          </h2>
+          {Meteor.user() ? (
+            <img
+              className="profile-picture"
+              src={this.props.currentUser.profile.picture}
+            />
+          ) : (
+            ""
+          )}
+          <a
+            href="#"
+            className="waves-effect waves-light btn"
+            onClick={this.logout}
+          >
+            Logout
+          </a>
+        </div>
       </div>
     );
   }
@@ -81,5 +112,6 @@ export default withTracker(() => {
   return {
     emojiPins: EmojiPins.find({}).fetch(), //TODO: add filtering by userId
     emojiMessages: EmojiMessages.find({read: false} ).fetch(), //TODO: add filtering so that only messages belonging to the user are fetched.
+    currentUser: Meteor.user()
   };
 })(App);

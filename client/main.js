@@ -1,17 +1,13 @@
-import React from 'react'
-import { Meteor } from 'meteor/meteor'
-import { render } from 'react-dom'
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Meteor } from "meteor/meteor";
+import { render } from "react-dom";
+import React from "react";
 
-import App from '../imports/ui/components/App.js'
+import { renderRoutes } from "../imports/startup/client/routes.js";
+import App from "../imports/ui/components/App.js";
 
 import '../imports/api/api.js'
 
 Meteor.startup(() => {
-
-
-
-  render(
-    <App />,
-  document.getElementById('root')
-  );
+  render(renderRoutes(), document.getElementById("root"));
 });
