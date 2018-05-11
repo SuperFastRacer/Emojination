@@ -1,73 +1,71 @@
 body {
-    background-color: white;
-    background-image: none;
+  background-color: white;
+  background-image: none;
 }
 
 .login-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .login-header {
-    margin-top: 20%;
-    text-align: center;
+  margin-top: 20%;
+  text-align: center;
 }
 
 .social-media-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .social-media-container .google-btn {
-    background-color: #EB5757;
-    color: white;
-    width: 250px;
-    height: 50px;
-    margin: 10px;
-    
-    display: flex;
-    align-items: center;
-    justify-content: center
+  background-color: #eb5757;
+  color: white;
+  width: 250px;
+  height: 50px;
+  margin: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .social-media-container .facebook-btn {
-    background-color: #2D9CDB;
-    color: white;
-    width: 250px;
-    height: 50px;
-    margin: 10px;
+  background-color: #2d9cdb;
+  color: white;
+  width: 250px;
+  height: 50px;
+  margin: 10px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .login-form {
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .center {
-    display:flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .input {
-    width: 250px;
-    height: 25px;
-    margin: 15px;
+  width: 250px;
+  height: 25px;
+  margin: 15px;
 }
 
 .login-btn {
-    margin-top: 35px;
+  margin-top: 35px;
 }
 
 .error-message {
-    color: red;
-
+  color: red;
 }
