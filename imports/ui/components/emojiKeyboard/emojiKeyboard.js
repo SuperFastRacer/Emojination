@@ -1,8 +1,8 @@
 import React from 'react';
-import EmojiObject from '../../../ui/components/EmojiList/EmojiObject';
+import EmojiObject from './EmojiObject';
 import emojiJSON from '../../resources/emoji.json';
 
-import './emojiKeyboard.css';
+import './emojiKeyboard.module.scss';
 
 class EmojiKeyboard extends React.Component {
     constructor(props) {
@@ -15,18 +15,21 @@ class EmojiKeyboard extends React.Component {
 
     getEmoji = clickedEmoji =>  {
         console.log(clickedEmoji);
-        return this.setState({emoji: clickedEmoji});
+        this.setState({emoji: clickedEmoji});
+
+        //TODO: call props function to return selected emoji to app
     }
 
     iterateList() {
         const keys = Object.keys(emojiJSON);
-        return emojiJSON.map(keys => 
+        return emojiJSON.map(keys =>
         <EmojiObject key={keys.id} emoji={keys.symbol} getEmoji={this.getEmoji}/>);
     }
 
     render() {
         return (
             <div id="emojiKeyboardContainer">
+                hej
                 {this.iterateList()}
             </div>
         )

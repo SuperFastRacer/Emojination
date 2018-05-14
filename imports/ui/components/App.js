@@ -8,6 +8,7 @@ import ReactDOM from "react-dom";
 import { EmojiMessages } from "../../api/api.js";
 import { EmojiPins } from "../../api/api.js";
 import Modal from "./Modal/Modal";
+import EmojiKeyboard from './emojiKeyboard/emojiKeyboard';
 
 import "./Topbar.scss";
 
@@ -124,6 +125,7 @@ class App extends Component {
             >
               Logout
             </a>
+            <EmojiKeyboard />
           </div>
         ) : (
           ""

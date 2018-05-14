@@ -1,7 +1,7 @@
 import React from 'react';
-import './EmojiObject.css';
+import './emojiKeyboard.module.scss';
 
-class EmojiObject extends React.Component {  
+class EmojiObject extends React.Component {
     constructor(props) {
         super(props)
     }
@@ -18,4 +18,4 @@ class EmojiObject extends React.Component {
   }
 }
 
-export default EmojiObject;  
+export default EmojiObject;
