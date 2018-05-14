@@ -29,7 +29,6 @@ class EmojiKeyboard extends React.Component {
     render() {
         return (
             <div id="emojiKeyboardContainer">
-                hej
                 {this.iterateList()}
             </div>
         )
