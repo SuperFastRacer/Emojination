@@ -1,0 +1,52 @@
+[
+    {
+        "id": 0,
+        "title": "fire",
+        "symbol": "🔥"
+    },
+    {
+        "id": 1,
+        "title": "heart-eyes",
+        "symbol": "😍"
+    },
+    {
+        "id": 2,
+        "title": "heart",
+        "symbol": "❤️"
+    },
+    {
+        "id": 3,
+        "title": "crying-laughing",
+        "symbol": "😂"
+    },
+    {
+        "id": 4,
+        "title": "ok-hand",
+        "symbol": "👌"
+    },
+    {
+        "id": 5,
+        "title": "poo",
+        "symbol": "💩"
+    },
+    {
+        "id": 6,
+        "title": "thumbs-up",
+        "symbol": "👍"
+    },
+    {
+        "id": 7,
+        "title": "thumbs-down",
+        "symbol": "👎"
+    },
+    {
+        "id": 8,
+        "title": "sunglasses",
+        "symbol": "😎"
+    },
+    {
+        "id": 9,
+        "title": "aubergine",
+        "symbol": "🍆"
+    }
+]
