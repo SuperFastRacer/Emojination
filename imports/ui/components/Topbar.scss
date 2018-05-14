@@ -9,15 +9,15 @@
 .topList{
   float:left;
   flex: 2;
-  align-items: center;
+  align-items: stretch;
   width: 100%;
   img {
     color: white;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-    max-width: 40px;
-    max-height: 40px;
+    max-width: 100px;
+    max-height: 100px;
 
     &:hover{
 
