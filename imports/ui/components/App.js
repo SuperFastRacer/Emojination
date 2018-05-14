@@ -2,14 +2,14 @@ import React from 'react'
 import Footer from './Footer'
 import AddTodo from '../containers/AddTodo'
 import VisibleTodoList from '../containers/VisibleTodoList'
-import EmojiContainer from '../containers/emojiContainer'
+import EmojiKeyboard from '../containers/emojiKeyboard/emojiKeyboard'
 
 const App = () => (
   <div className="todocontainer container">
     <AddTodo />
     <VisibleTodoList />
     <Footer />
-    <EmojiContainer />
+    <EmojiKeyboard />
   </div>
 )
 
