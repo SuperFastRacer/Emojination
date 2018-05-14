@@ -25,8 +25,10 @@ class App extends Component {
       isOpen: false
     };
 
-    this.sendMessageToServer = this.sendMessageToServer.bind(this);
-    this.logout = this.logout.bind(this);
+    this.sendMessageToServer = this.sendMessageToServer.bind(this)
+    this.logout = this.logout.bind(this)
+    this.toggleModal = this.toggleModal.bind(this)
+    this.renderTopbar = this.renderTopbar.bind(this)
   }
 
   componentWillMount() {
@@ -77,7 +79,9 @@ class App extends Component {
     });
   }
 
-  toggleModal = () => {
+  toggleModal() {
+
+    console.log(this.state.isOpen)
     this.setState({
       isOpen: !this.state.isOpen
     });
@@ -86,13 +90,13 @@ class App extends Component {
   renderTopbar() {
     return (
       <ul className="topBar">
-        <li className="topList" onClick={this.toggleModal}>
+        <li onClick={this.toggleModal}>
           <img className={"profile"} src="/profile_icon.png" alt="Profile" />
         </li>
-        <li className="topList">
+        <li>
           <img className={"addFriend"} src="/add_friend.png" alt="add friend" />
         </li>
-        <li className="topList">
+        <li>
           <img className={"send"} src="/send.png" alt="Send" />
         </li>
       </ul>
@@ -103,12 +107,16 @@ class App extends Component {
     return (
       <div>
         {Meteor.user() ? (
-          <div className="container">
+          <div className="appContainer">
             <header>{this.renderTopbar()}</header>
-            <Modal show={this.state.isOpen} onClose={this.toggleModal}>
-              <h2>{this.props.currentUser.profile.name}</h2>
-              <img src={this.props.currentUser.profile.picture} />
-            </Modal>
+            {this.state.isOpen?
+              <Modal onClose={this.toggleModal}>
+                <h2>{this.props.currentUser.profile.name}</h2>
+                <img src={this.props.currentUser.profile.picture} />
+              </Modal>
+              :
+              ""
+            }
             <a
               href="#"
               className="waves-effect waves-light btn"

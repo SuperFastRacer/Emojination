@@ -4,23 +4,24 @@
   padding: 0;
   overflow: hidden;
   display: flex;
+  justify-content: space-between;
   width:100%;
-}
-.topList{
-  float:left;
-  flex: 2;
-  align-items: center;
-  width: 100%;
-  img {
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    max-width: 40px;
-    max-height: 40px;
 
-    &:hover{
+  li{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      max-width: 10vw;
+      max-height: 10vw;
 
+      &:hover{
+
+      }
     }
   }
 }

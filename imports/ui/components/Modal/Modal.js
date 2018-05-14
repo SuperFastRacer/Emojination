@@ -3,15 +3,18 @@ import PropTypes from 'prop-types';
 
 import './modal.module.scss';
 class Modal extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+
+    }
+  }
   render() {
     // Render nothing if the "show" prop is false
-    if(!this.props.show) {
-      return null;
-    }
 
     return (
-      <div className="backdrop">
-        <div className="modal">
+      <div className="modal_backdrop">
+        <div className="user_modal">
           {this.props.children}
 
           <div className={"footer"}>
@@ -20,6 +23,7 @@ class Modal extends React.Component {
             </div>
           </div>
         </div>
+        hej
       </div>
     );
   }
@@ -27,7 +31,6 @@ class Modal extends React.Component {
 
 Modal.propTypes = {
   onClose: PropTypes.func.isRequired,
-  show: PropTypes.bool,
   children: PropTypes.node
 };
 
