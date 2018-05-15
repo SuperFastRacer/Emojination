@@ -1,9 +1,16 @@
+<<<<<<< HEAD
 import { Meteor } from "meteor/meteor";
 import { withHistory } from "react-router-dom";
 import { withTracker } from "meteor/react-meteor-data";
 import PropTypes from "prop-types";
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+
+import Map from './Map';
+import UserLocation from './UserLocation';
+import {GeolocationProps ,geolocation} from 'react-geolocation';
+import Loading from './Loading.js';
+
 
 import { EmojiMessages } from "../../api/api.js";
 import { EmojiPins } from "../../api/api.js";
@@ -23,13 +30,17 @@ class App extends Component {
       unreadMessages: this.props.emojiMessages ? this.props.emojiMessages : "",
       isAuthenticated: Meteor.userId() !== null,
       hasData: false,
-      isOpen: false
+      isOpen: false,
+      coords: undefined
     };
 
     this.sendMessageToServer = this.sendMessageToServer.bind(this)
     this.logout = this.logout.bind(this)
     this.toggleModal = this.toggleModal.bind(this)
     this.renderTopbar = this.renderTopbar.bind(this)
+    this.getCoords = this.getCoords.bind(this)
+
+    this.getCoords()
   }
 
   componentWillMount() {
@@ -43,6 +54,26 @@ class App extends Component {
     }
   }
 
+  renderMap(coords) {
+    return coords ? (<Map mapCoords={coords}/>) : <Loading/>;
+  }
+
+  fetchCoords() {
+   let fetchedCoords = null
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve);
+    });
+  }
+
+  async getCoords(){
+    console.log('fetching');
+
+    const coords = await this.fetchCoords();
+    console.log('coords found:',coords);
+    this.setState(previousState => {
+      return { coords: coords};
+    });
+  }
   //standard lifecyclemethod for react
   /*getDerivedStateFromProps(nextProps,prevState) {
     // do something with Emojimessage prop
@@ -104,11 +135,14 @@ class App extends Component {
     );
   }
 
+
   render() {
+    const coords = this.state.coords
     return (
       <div>
         {Meteor.user() ? (
           <div className="appContainer">
+            {this.renderMap(coords)}
             <header>{this.renderTopbar()}</header>
             {this.state.isOpen?
               <Modal onClose={this.toggleModal}>
@@ -133,6 +167,8 @@ class App extends Component {
       </div>
     );
   }
+
+
 }
 export default withTracker(() => {
   Meteor.subscribe("emoji_pins");
