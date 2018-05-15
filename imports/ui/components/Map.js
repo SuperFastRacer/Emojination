@@ -4,6 +4,8 @@ import UserLocation from './UserLocation';
 import geolocation from 'react-geolocation';
 import Delay from 'react-delay'
 
+import './map.module.scss';
+
 
 const UserReaction = ({ reaction }) => <div><h1>{reaction}</h1></div>;
 
@@ -11,12 +13,12 @@ class Map extends Component {
 
   constructor(props) {
     super(props);
-  
+
     let center = {
       lat: 63.123,
       lng: 20.123
     }
-    
+
     this.state = {
       center: {
         lat: center.lat,
@@ -27,8 +29,8 @@ class Map extends Component {
   }
     render() {
       return (
-        <div style={{ height: '100vh', width: '100%' }}>
-          <GoogleMapReact 
+        <div className="emojiMap">
+          <GoogleMapReact
           bootstrapURLKeys={{ key: 'AIzaSyBky1lvKcJb9ipHrJGwBzzsS2BpCEA8XYI'}}
           defaultCenter={{lat: this.props.mapCoords.coords.latitude, lng: this.props.mapCoords.coords.longitude}}
           { ...this.props.children }
@@ -40,10 +42,10 @@ class Map extends Component {
           lat={this.props.mapCoords.coords.latitude}
           lng={this.props.mapCoords.coords.longitude}
           reaction={'x'}
-          
+
           />
         </GoogleMapReact>
-        
+
         </div>
       );
     }
@@ -67,7 +69,7 @@ export default Map;
 
     })
 
-    
+
   }*/
 
 
@@ -76,7 +78,7 @@ export default Map;
 
 
 
-  
+
   /*static defaultProps = {
     center: {
       lat: 25,

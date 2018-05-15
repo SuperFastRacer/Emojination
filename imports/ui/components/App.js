@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Meteor } from "meteor/meteor";
 import { withHistory } from "react-router-dom";
 import { withTracker } from "meteor/react-meteor-data";
