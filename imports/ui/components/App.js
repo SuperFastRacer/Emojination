@@ -38,6 +38,7 @@ class App extends Component {
     this.toggleModal = this.toggleModal.bind(this)
     this.renderTopbar = this.renderTopbar.bind(this)
     this.getCoords = this.getCoords.bind(this)
+    this.renderMap = this.renderMap.bind(this)
 
     this.getCoords()
   }
@@ -54,18 +55,30 @@ class App extends Component {
   }
 
   renderMap(coords) {
-    return coords ? (<Map mapCoords={coords}/>) : <Loading/>;
+    return this.state.coords ? (<Map mapCoords={this.state.coords}/>) : <Loading/>;
   }
 
+
+
   fetchCoords() {
+    function onError(error) {
+        alert('code: '    + error.code    + '\n' +
+              'message: ' + error.message + '\n');
+    }
    let fetchedCoords = null
+
+   var options = { enableHighAccuracy: true, maximumAge: 100, timeout: 60000 };
     return new Promise((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition(resolve);
+      cordova.plugins.diagnostic.requestLocationAuthorization(function(status){
+      navigator.geolocation.getCurrentPosition(resolve, onError, options);
+}, function(error){
+    console.error(error);
+});
+
     });
   }
 
   async getCoords(){
-    console.log('fetching');
 
     const coords = await this.fetchCoords();
     console.log('coords found:',coords);
@@ -136,28 +149,21 @@ class App extends Component {
 
 
   render() {
-    const coords = this.state.coords
     return (
       <div>
         {Meteor.user() ? (
           <div className="appContainer">
-            {this.renderMap(coords)}
+            {this.renderMap()}
             <header>{this.renderTopbar()}</header>
             {this.state.isOpen?
-              <Modal onClose={this.toggleModal}>
+              <Modal onClose={this.toggleModal} onLogout={this.logout}>
                 <h2>{this.props.currentUser.profile.name}</h2>
                 <img src={this.props.currentUser.profile.picture} />
               </Modal>
               :
               ""
             }
-            <a
-              href="#"
-              className="waves-effect waves-light btn"
-              onClick={this.logout}
-            >
-              Logout
-            </a>
+
             <EmojiKeyboard />
           </div>
         ) : (

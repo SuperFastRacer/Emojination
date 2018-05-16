@@ -16,7 +16,13 @@ class Modal extends React.Component {
       <div className="modal_backdrop">
         <div className="user_modal">
           {this.props.children}
-
+          <a
+            href="#"
+            className="waves-effect waves-light btn"
+            onClick={this.props.onLogout}
+          >
+            Logout
+          </a>
           <div className={"footer"}>
             <div onClick={this.props.onClose} className={"close"}>
               <p className={"cross"}>X</p>
