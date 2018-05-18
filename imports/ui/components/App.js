@@ -5,16 +5,15 @@ import PropTypes from "prop-types";
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
-import Map from './Map';
-import UserLocation from './UserLocation';
-import {GeolocationProps ,geolocation} from 'react-geolocation';
-import Loading from './Loading.js';
-
+import Map from "./Map";
+import UserLocation from "./UserLocation";
+import { GeolocationProps, geolocation } from "react-geolocation";
+import Loading from "./Loading.js";
 
 import { EmojiMessages } from "../../api/api.js";
 import { EmojiPins } from "../../api/api.js";
 import Modal from "./Modal/Modal";
-import EmojiKeyboard from './emojiKeyboard/emojiKeyboard';
+import EmojiKeyboard from "./emojiKeyboard/emojiKeyboard";
 
 import "./Topbar.scss";
 
@@ -33,14 +32,14 @@ class App extends Component {
       coords: undefined
     };
 
-    this.sendMessageToServer = this.sendMessageToServer.bind(this)
-    this.logout = this.logout.bind(this)
-    this.toggleModal = this.toggleModal.bind(this)
-    this.renderTopbar = this.renderTopbar.bind(this)
-    this.getCoords = this.getCoords.bind(this)
-    this.renderMap = this.renderMap.bind(this)
+    this.sendMessageToServer = this.sendMessageToServer.bind(this);
+    this.logout = this.logout.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
+    this.renderTopbar = this.renderTopbar.bind(this);
+    this.getCoords = this.getCoords.bind(this);
+    this.renderMap = this.renderMap.bind(this);
 
-    this.getCoords()
+    this.getCoords();
   }
 
   componentWillMount() {
@@ -55,35 +54,59 @@ class App extends Component {
   }
 
   renderMap(coords) {
-    return this.state.coords ? (<Map mapCoords={this.state.coords}/>) : <Loading/>;
+    return this.state.coords ? (
+      <Map mapCoords={this.state.coords} />
+    ) : (
+      <Loading />
+    );
   }
-
-
 
   fetchCoords() {
     function onError(error) {
-        alert('code: '    + error.code    + '\n' +
-              'message: ' + error.message + '\n');
+      alert("code: " + error.code + "\n" + "message: " + error.message + "\n");
     }
-   let fetchedCoords = null
+    let fetchedCoords = null;
 
-   var options = { enableHighAccuracy: true, maximumAge: 100, timeout: 60000 };
+    var options = { enableHighAccuracy: true, maximumAge: 100, timeout: 60000 };
     return new Promise((resolve, reject) => {
-      cordova.plugins.diagnostic.requestLocationAuthorization(function(status){
-      navigator.geolocation.getCurrentPosition(resolve, onError, options);
-}, function(error){
-    console.error(error);
-});
-
+      if (Meteor.isCordova) {
+        cordova.plugins.diagnostic.requestLocationAuthorization(
+          function(status) {
+            switch (status) {
+              case cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED:
+                console.log("Permission not requested");
+                break;
+              case cordova.plugins.diagnostic.permissionStatus.GRANTED:
+                console.log("Permission granted");
+                navigator.geolocation.getCurrentPosition(
+                  resolve,
+                  onError,
+                  options
+                );
+                break;
+              case cordova.plugins.diagnostic.permissionStatus.DENIED:
+                console.log("Permission denied");
+                break;
+              case cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS:
+                console.log("Permission permanently denied");
+                break;
+            }
+          },
+          function(error) {
+            console.error(error);
+          }
+        );
+      } else {
+        navigator.geolocation.getCurrentPosition(resolve, onError, options);
+      }
     });
   }
 
-  async getCoords(){
-
+  async getCoords() {
     const coords = await this.fetchCoords();
-    console.log('coords found:',coords);
+    console.log("coords found:", coords);
     this.setState(previousState => {
-      return { coords: coords};
+      return { coords: coords };
     });
   }
   //standard lifecyclemethod for react
@@ -124,12 +147,11 @@ class App extends Component {
   }
 
   toggleModal() {
-
-    console.log(this.state.isOpen)
+    console.log(this.state.isOpen);
     this.setState({
       isOpen: !this.state.isOpen
     });
-  };
+  }
 
   renderTopbar() {
     return (
@@ -147,7 +169,6 @@ class App extends Component {
     );
   }
 
-
   render() {
     return (
       <div>
@@ -155,14 +176,14 @@ class App extends Component {
           <div className="appContainer">
             {this.renderMap()}
             <header>{this.renderTopbar()}</header>
-            {this.state.isOpen?
+            {this.state.isOpen ? (
               <Modal onClose={this.toggleModal} onLogout={this.logout}>
                 <h2>{this.props.currentUser.profile.name}</h2>
                 <img src={this.props.currentUser.profile.picture} />
               </Modal>
-              :
+            ) : (
               ""
-            }
+            )}
 
             <EmojiKeyboard />
           </div>
@@ -172,8 +193,6 @@ class App extends Component {
       </div>
     );
   }
-
-
 }
 export default withTracker(() => {
   Meteor.subscribe("emoji_pins");
