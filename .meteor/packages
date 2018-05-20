@@ -24,9 +24,9 @@ accounts-base
 accounts-password
 service-configuration
 accounts-google
-materialize:materialize
 http
 accounts-facebook
 fourseven:scss
 check
 yuukan:streamy
+materialize:materialize@=0.97.0
