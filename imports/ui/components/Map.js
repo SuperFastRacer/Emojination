@@ -7,7 +7,7 @@ import Delay from 'react-delay'
 import './map.module.scss';
 
 
-const UserReaction = ({ reaction }) => <div><h1>{reaction}</h1></div>;
+const UserReaction = ({ reaction }) => <span>{reaction}</span>;
 
 class Map extends Component {
 
@@ -24,7 +24,7 @@ class Map extends Component {
         lat: center.lat,
         lng: center.lng
       },
-      zoom: 11,
+      zoom: 15,
     };
   }
     render() {
