@@ -55,7 +55,7 @@ class Map extends Component {
           >
 
 
-          {/*pins*/ }
+          {pins }
             <UserReaction
               lat={this.props.mapCoords.coords.latitude}
               lng={this.props.mapCoords.coords.longitude}

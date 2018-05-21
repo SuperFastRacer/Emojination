@@ -166,7 +166,7 @@ class App extends Component {
   setEmojiToSend(emoji) {
     //set selectedEmoji state
     console.log('My coords are: '+ this.state.coords.coords.latitude + 'and ' + this.state.coords.coords.longitude)
-    Meteor.call('emoji_pins.insert', this.props.currentUser, emoji.symbol.toString(), this.state.coords.coords.latitude, this.state.coords.coords.longitude)
+    Meteor.call('emoji_pins.insert', this.props.currentUser, emoji, this.state.coords.coords.latitude, this.state.coords.coords.longitude)
     console.log(emoji);
     this.setState({emoji: emoji});
   }

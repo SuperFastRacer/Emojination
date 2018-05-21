@@ -14,7 +14,6 @@ class EmojiKeyboard extends React.Component {
     }
     
     getEmoji = clickedEmoji =>  {
-        console.log(clickedEmoji);
         this.props.onEmojiClick(clickedEmoji)
     }
     
@@ -22,7 +21,7 @@ class EmojiKeyboard extends React.Component {
     iterateList() {
         const keys = Object.keys(emojiJSON);
         return emojiJSON.map(keys =>
-        <EmojiObject key={keys.id} emoji={keys.symbol} getEmoji={this.props.getEmoji}/>);
+        <EmojiObject key={keys.id} emoji={keys.symbol} getEmoji={this.getEmoji}/>);
     }
 
     render() {
