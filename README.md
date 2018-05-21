@@ -47,3 +47,7 @@ It is recommended to use npm for 3rd party JavaScript libraries and use import t
 *tests*
 
 Any directory named tests/ is not loaded anywhere. Use this for any test code you want to run using a test runner outside of Meteor’s built-in test tools.
+
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />

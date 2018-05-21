@@ -15,9 +15,7 @@ class EmojiKeyboard extends React.Component {
 
     getEmoji = clickedEmoji =>  {
         console.log(clickedEmoji);
-        this.setState({emoji: clickedEmoji});
-
-        //TODO: call props function to return selected emoji to app
+        this.props.onEmojiClick(clickedEmoji)
     }
 
     iterateList() {

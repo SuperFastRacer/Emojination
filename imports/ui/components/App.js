@@ -34,6 +34,7 @@ class App extends Component {
     };
 
     this.sendMessageToServer = this.sendMessageToServer.bind(this)
+    this.setEmojiToSend = this.setEmojiToSend.bind(this)
     this.logout = this.logout.bind(this)
     this.toggleModal = this.toggleModal.bind(this)
     this.renderTopbar = this.renderTopbar.bind(this)
@@ -55,10 +56,38 @@ class App extends Component {
   }
 
   renderMap(coords) {
-    return this.state.coords ? (<Map mapCoords={this.state.coords}/>) : <Loading/>;
+    return this.state.coords ? (<Map mapCoords={this.state.coords} emojiPins={this.props.emojiPins}/>) : <Loading/>;
   }
 
+  fetchPermissions() {
+    return new Promise((resolve, reject) => {
+      if(Meteor.isCordova) {
+        cordova.plugins.diagnostic.getLocationAuthorizationStatus(function(status){
+          switch(status){
+            case cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED:
+              console.log("Permission not requested");
+              break;
+            case cordova.plugins.diagnostic.permissionStatus.GRANTED:
+              console.log("Permission granted");
+              break;
+            case cordova.plugins.diagnostic.permissionStatus.DENIED:
+              console.log("Permission denied");
+              break;
+            case cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS:
+              console.log("Permission permanently denied");
+              break;
+            }
+          }, function(error){
+            console.error(error);
+          });
+          resolve('hi')
+      }
+      else {
+        resolve('not a mobile device')
+      }
 
+    })
+  }
 
   fetchCoords() {
     function onError(error) {
@@ -69,11 +98,30 @@ class App extends Component {
 
    var options = { enableHighAccuracy: true, maximumAge: 100, timeout: 60000 };
     return new Promise((resolve, reject) => {
-      cordova.plugins.diagnostic.requestLocationAuthorization(function(status){
-      navigator.geolocation.getCurrentPosition(resolve, onError, options);
-}, function(error){
-    console.error(error);
-});
+      if(Meteor.isCordova) {
+        cordova.plugins.diagnostic.requestLocationAuthorization(function(status){
+          switch(status){
+            case cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED:
+              console.log("Permission not requested");
+              break;
+            case cordova.plugins.diagnostic.permissionStatus.GRANTED:
+              console.log("Permission granted");
+              navigator.geolocation.getCurrentPosition(resolve, onError, options);
+              break;
+            case cordova.plugins.diagnostic.permissionStatus.DENIED:
+              console.log("Permission denied");
+              break;
+            case cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS:
+              console.log("Permission permanently denied");
+              break;
+          }
+        }, function(error){
+          console.error(error);
+        });
+      }
+      else {
+        navigator.geolocation.getCurrentPosition(resolve, onError, options);
+      }
 
     });
   }
@@ -104,8 +152,10 @@ class App extends Component {
   }
 
   // will be passed down to child component (emoji keyboard)
-  setEmojiToSend(emojiCode) {
+  setEmojiToSend(emoji) {
     //set selectedEmoji state
+    console.log('My coords are: '+ this.state.coords.coords.latitude + 'and ' + this.state.coords.coords.longitude)
+    Meteor.call('emoji_pins.insert', this.props.currentUser, emoji.symbol.toString(), this.state.coords.coords.latitude, this.state.coords.coords.longitude)
   }
 
   unsetEmojiToSend() {
@@ -164,7 +214,7 @@ class App extends Component {
               ""
             }
 
-            <EmojiKeyboard />
+            <EmojiKeyboard onEmojiClick={this.setEmojiToSend}/>
           </div>
         ) : (
           ""
