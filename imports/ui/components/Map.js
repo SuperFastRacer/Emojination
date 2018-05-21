@@ -26,8 +26,24 @@ class Map extends Component {
       },
       zoom: 15,
     };
+
+    this.renderEmojis = this.renderEmojis.bind(this)
+  }
+
+  renderEmojis() {
+    let _this = this
+    console.log(this.props.emojiPins)
+    return this.props.emojiPins.map(pin =>
+    <UserReaction key={pin._id} lat={pin.latitude} lng={pin.longitude} reaction={pin.emojiId}/>);
   }
     render() {
+      const pins = this.props.emojiPins.map(pin => {
+        console.log("pinid: " + pin._id +"emoji: "+ pin.emojiId +"coords "+ pin.latitude + pin.longitude)
+        return (
+          <UserReaction key={pin._id} lat={pin.latitude} lng={pin.longitude} reaction={pin.emojiId}/>
+        )
+      })
+
       return (
         <div className="emojiMap">
           <GoogleMapReact
@@ -38,12 +54,13 @@ class Map extends Component {
           //defaultZoom={11}
           >
 
-        <UserReaction
-          lat={this.props.mapCoords.coords.latitude}
-          lng={this.props.mapCoords.coords.longitude}
-          reaction={this.props.emoji}
 
-          />
+          {/*pins*/ }
+            <UserReaction
+              lat={this.props.mapCoords.coords.latitude}
+              lng={this.props.mapCoords.coords.longitude}
+              reaction={this.props.emoji}
+            />
         </GoogleMapReact>
 
         </div>

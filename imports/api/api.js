@@ -18,7 +18,7 @@ if (Meteor.isServer) {
 Meteor.methods({
   'emoji_pins.insert'(userId,emojiId, latitude, longitude) {
 
-    check(emojiId, String);
+    
 
     // Make sure the user is logged in before inserting a task
     // if (! this.userId) {

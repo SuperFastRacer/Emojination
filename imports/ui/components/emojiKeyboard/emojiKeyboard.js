@@ -12,12 +12,12 @@ class EmojiKeyboard extends React.Component {
             emoji: ''
         }
     }
-    /*
+    
     getEmoji = clickedEmoji =>  {
         console.log(clickedEmoji);
-        this.setState({emoji: clickedEmoji});
+        this.props.onEmojiClick(clickedEmoji)
     }
-    */
+    
 
     iterateList() {
         const keys = Object.keys(emojiJSON);
