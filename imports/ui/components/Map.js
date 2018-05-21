@@ -24,7 +24,7 @@ class Map extends Component {
         lat: center.lat,
         lng: center.lng
       },
-      zoom: 11
+      zoom: 11,
     };
   }
     render() {
@@ -41,7 +41,7 @@ class Map extends Component {
         <UserReaction
           lat={this.props.mapCoords.coords.latitude}
           lng={this.props.mapCoords.coords.longitude}
-          reaction={'x'}
+          reaction={this.props.emoji}
 
           />
         </GoogleMapReact>

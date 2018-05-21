@@ -12,18 +12,17 @@ class EmojiKeyboard extends React.Component {
             emoji: ''
         }
     }
-
+    /*
     getEmoji = clickedEmoji =>  {
         console.log(clickedEmoji);
         this.setState({emoji: clickedEmoji});
-
-        //TODO: call props function to return selected emoji to app
     }
+    */
 
     iterateList() {
         const keys = Object.keys(emojiJSON);
         return emojiJSON.map(keys =>
-        <EmojiObject key={keys.id} emoji={keys.symbol} getEmoji={this.getEmoji}/>);
+        <EmojiObject key={keys.id} emoji={keys.symbol} getEmoji={this.props.getEmoji}/>);
     }
 
     render() {

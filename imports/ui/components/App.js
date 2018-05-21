@@ -29,7 +29,8 @@ class App extends Component {
       isAuthenticated: Meteor.userId() !== null,
       hasData: false,
       isOpen: false,
-      coords: undefined
+      coords: undefined,
+      emoji: 'x'
     };
 
     this.sendMessageToServer = this.sendMessageToServer.bind(this);
@@ -55,10 +56,15 @@ class App extends Component {
 
   renderMap(coords) {
     return this.state.coords ? (
-      <Map mapCoords={this.state.coords} />
+      <Map mapCoords={this.state.coords} emoji={this.state.emoji} />
     ) : (
       <Loading />
     );
+  }
+
+  getEmoji = clickedEmoji =>  {
+    console.log(clickedEmoji);
+    this.setState({emoji: clickedEmoji});
   }
 
   fetchCoords() {
@@ -185,7 +191,7 @@ class App extends Component {
               ""
             )}
 
-            <EmojiKeyboard />
+            <EmojiKeyboard getEmoji={this.getEmoji} />
           </div>
         ) : (
           ""
