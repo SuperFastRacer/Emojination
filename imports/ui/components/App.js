@@ -166,7 +166,7 @@ class App extends Component {
   setEmojiToSend(emoji) {
     //set selectedEmoji state
     console.log('My coords are: '+ this.state.coords.coords.latitude + 'and ' + this.state.coords.coords.longitude)
-    Meteor.call('emoji_pins.insert', this.props.currentUser, emoji, this.state.coords.coords.latitude, this.state.coords.coords.longitude)
+    Meteor.call('emoji_pins.insert', this.props.currentUser._id, emoji, this.state.coords.coords.latitude, this.state.coords.coords.longitude)
     console.log(emoji);
     //this.setState({emoji: emoji});
   }
@@ -240,6 +240,6 @@ export default withTracker(() => {
   return {
     emojiPins: EmojiPins.find({owner: { $ne: Meteor.userId() } }).fetch(),
     emojiMessages: EmojiMessages.find({ read: false }).fetch(), //TODO: add filtering so that only messages belonging to the user are fetched.
-    currentUser: Meteor.userId()
+    currentUser: Meteor.user()
   };
 })(App);
