@@ -10,6 +10,10 @@ if (Meteor.isServer) {
   Meteor.publish('emoji_pins', function EmojiPinsPublication() {
     return EmojiPins.find()
   })
+  Meteor.publish("filter_pins", function FilterPinsPublication(userID){
+    var userId = this.userId
+    return EmojiPins.find({owner: {$ne: userID}})
+  })
   Meteor.publish('emoji_messages', function EmojiMessagesPublication() {
     return EmojiMessages.find()
   })
@@ -18,7 +22,7 @@ if (Meteor.isServer) {
 Meteor.methods({
   'emoji_pins.insert'(userId,emojiId, latitude, longitude) {
 
-    
+
 
     // Make sure the user is logged in before inserting a task
     // if (! this.userId) {
@@ -26,7 +30,7 @@ Meteor.methods({
     //}
 
     EmojiPins.insert({
-      userId,
+      owner: userId,
       emojiId,
       createdAt: new Date(),
       latitude,

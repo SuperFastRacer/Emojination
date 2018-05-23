@@ -29,7 +29,7 @@ class App extends Component {
       hasData: false,
       isOpen: false,
       coords: undefined,
-      emoji: 'x'
+      emoji: '🔵'
     };
 
     this.sendMessageToServer = this.sendMessageToServer.bind(this)
@@ -55,15 +55,15 @@ class App extends Component {
   }
 
   renderMap(coords) {
-    return this.state.coords ? 
-    (<Map mapCoords={this.state.coords} emoji={this.state.emoji} emojiPins={this.props.emojiPins}/>) 
-    : 
+    return this.state.coords ?
+    (<Map mapCoords={this.state.coords} emoji={this.state.emoji} emojiPins={this.props.emojiPins}/>)
+    :
     <Loading/>;
-  
+
   }
 
   getEmoji = clickedEmoji =>  {
-    
+
   }
 
 
@@ -168,7 +168,7 @@ class App extends Component {
     console.log('My coords are: '+ this.state.coords.coords.latitude + 'and ' + this.state.coords.coords.longitude)
     Meteor.call('emoji_pins.insert', this.props.currentUser, emoji, this.state.coords.coords.latitude, this.state.coords.coords.longitude)
     console.log(emoji);
-    this.setState({emoji: emoji});
+    //this.setState({emoji: emoji});
   }
 
   unsetEmojiToSend() {
@@ -238,8 +238,8 @@ export default withTracker(() => {
   Meteor.subscribe("emoji_pins");
   Meteor.subscribe("emoji_messages");
   return {
-    emojiPins: EmojiPins.find({}).fetch(), //TODO: add filtering by userId
+    emojiPins: EmojiPins.find({owner: { $ne: Meteor.userId() } }).fetch(),
     emojiMessages: EmojiMessages.find({ read: false }).fetch(), //TODO: add filtering so that only messages belonging to the user are fetched.
-    currentUser: Meteor.user()
+    currentUser: Meteor.userId()
   };
 })(App);

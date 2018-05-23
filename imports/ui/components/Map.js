@@ -7,7 +7,7 @@ import Delay from 'react-delay'
 import './map.module.scss';
 
 
-const UserReaction = ({ reaction }) => <span>{reaction}</span>;
+const UserReaction = (props) => <span className={props.pinclassname? props.pinclassname : "emojiMapPin"}>{props.reaction}</span>;
 
 class Map extends Component {
 
@@ -55,12 +55,14 @@ class Map extends Component {
           >
 
 
-          {pins }
+
             <UserReaction
+              pinclassname="userLocation"
               lat={this.props.mapCoords.coords.latitude}
               lng={this.props.mapCoords.coords.longitude}
               reaction={this.props.emoji}
             />
+            {pins }
         </GoogleMapReact>
 
         </div>
