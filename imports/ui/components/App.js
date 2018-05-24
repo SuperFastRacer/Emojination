@@ -13,6 +13,7 @@ import Loading from "./Loading.js";
 import { EmojiMessages } from "../../api/api.js";
 import { EmojiPins } from "../../api/api.js";
 import Modal from "./Modal/Modal";
+import UsersList from "./UsersList/UsersList";
 import EmojiKeyboard from "./emojiKeyboard/emojiKeyboard";
 
 import "./Topbar.scss";
@@ -28,6 +29,7 @@ class App extends Component {
       isAuthenticated: Meteor.userId() !== null,
       hasData: false,
       isOpen: false,
+      isUsersListOpen: false,
       coords: undefined,
       emoji: '🔵'
     };
@@ -36,6 +38,7 @@ class App extends Component {
     this.setEmojiToSend = this.setEmojiToSend.bind(this)
     this.logout = this.logout.bind(this)
     this.toggleModal = this.toggleModal.bind(this)
+    this.toggleUsersList = this.toggleUsersList.bind(this)
     this.renderTopbar = this.renderTopbar.bind(this)
     this.getCoords = this.getCoords.bind(this)
     this.renderMap = this.renderMap.bind(this)
@@ -151,10 +154,11 @@ class App extends Component {
     /*/
 
   // will be passed down to child component(contact list)
-  sendMessageToServer(receiverId) {
+  sendMessageToServer(receivingUserId) {
     // do something
-    // Meteor.call('emoji_messages.insert', this.state.emojiToSend, receiverId)
-    // Meteor.call('emoji_pins.insert', this.props.currentUser, this.state.emojiToSend, latitude, longitude)
+    //TODO: meybe change user and sender to be the full user object instead of just id(depends on how and where the messages will be displayed)
+    Meteor.call('emoji_messages.insert', this.props.currentUser._id, this.state.emoji, receivingUserId)
+    Meteor.call('emoji_pins.insert', this.props.currentUser._id, this.state.emoji, this.state.coords.coords.latitude, this.state.coords.coords.longitude)
   }
 
   // will be called inside sendMessageToServer()
@@ -165,10 +169,8 @@ class App extends Component {
   // will be passed down to child component (emoji keyboard)
   setEmojiToSend(emoji) {
     //set selectedEmoji state
-    console.log('My coords are: '+ this.state.coords.coords.latitude + 'and ' + this.state.coords.coords.longitude)
-    Meteor.call('emoji_pins.insert', this.props.currentUser._id, emoji, this.state.coords.coords.latitude, this.state.coords.coords.longitude)
-    console.log(emoji);
-    //this.setState({emoji: emoji});
+    //Meteor.call('emoji_pins.insert', this.props.currentUser._id, emoji, this.state.coords.coords.latitude, this.state.coords.coords.longitude)
+    this.setState({emoji: emoji});
   }
 
   unsetEmojiToSend() {
@@ -187,11 +189,16 @@ class App extends Component {
   }
 
   toggleModal() {
-    console.log(this.state.isOpen);
     this.setState({
       isOpen: !this.state.isOpen
     });
   }
+  toggleUsersList() {
+    this.setState({
+      isUsersListOpen: !this.state.isUsersListOpen
+    });
+  }
+
 
   renderTopbar() {
     return (
@@ -202,7 +209,7 @@ class App extends Component {
         <li>
           <img className={"addFriend"} src="/add_friend.png" alt="add friend" />
         </li>
-        <li>
+        <li onClick={this.toggleUsersList}>
           <img className={"send"} src="/send.png" alt="Send" />
         </li>
       </ul>
@@ -216,14 +223,19 @@ class App extends Component {
           <div className="appContainer">
             {this.renderMap()}
             <header>{this.renderTopbar()}</header>
-            {this.state.isOpen ? (
-              <Modal onClose={this.toggleModal} onLogout={this.logout}>
+            {this.state.isOpen ?
+              (<Modal onClose={this.toggleModal} onLogout={this.logout}>
                 <h2>{this.props.currentUser.profile.name}</h2>
                 <img src={this.props.currentUser.profile.picture} />
-              </Modal>
-            ) : (
-              ""
-            )}
+              </Modal>)
+              :
+              ("")
+            }
+            {this.state.isUsersListOpen ?
+              (<UsersList onClose={this.toggleUsersList} users={this.props.usersList} messages={this.props.emojiMessages} onSendMessage={this.sendMessageToServer}/>)
+              :
+              ("")
+            }
 
             <EmojiKeyboard onEmojiClick={this.setEmojiToSend}/>
           </div>
@@ -237,9 +249,11 @@ class App extends Component {
 export default withTracker(() => {
   Meteor.subscribe("emoji_pins");
   Meteor.subscribe("emoji_messages");
+  Meteor.subscribe("logged_in_users");
   return {
     emojiPins: EmojiPins.find({owner: { $ne: Meteor.userId() } }).fetch(),
-    emojiMessages: EmojiMessages.find({ read: false }).fetch(), //TODO: add filtering so that only messages belonging to the user are fetched.
-    currentUser: Meteor.user()
+    emojiMessages: EmojiMessages.find({}).fetch(), //TODO: add filtering so that only messages belonging to the user are fetched.
+    currentUser: Meteor.user(),
+    usersList: Meteor.users.find({_id: { $ne: Meteor.userId() } }).fetch()
   };
 })(App);

@@ -13,6 +13,7 @@
     flex-wrap: nowrap;
     display: flex;
     will-change: overflow;
+    z-index: 7;
 }
 
 .emojiObject {

@@ -8,30 +8,18 @@ export const EmojiMessages = new Mongo.Collection('emoji_messages')
 if (Meteor.isServer) {
   // This code only runs on the server
   Meteor.publish('emoji_pins', function EmojiPinsPublication() {
-
-
-
-    /*Meteor.setInterval((EmojiPins) => {
-      let date = new Date()
-      let currenttime = date.getTime();
-      console.log("Timeout called after three seconds...");
-      this.EmojiPins.deleteMany({
-        $where: function() {
-          return ((currenttime - this.createdAt) > 10000  ) //delete any pins older than 20 minutes
-        }
-      })
-      return EmojiPins.find()
-    }, 3000);*/
     return EmojiPins.find()
-
   })
 
   Meteor.publish("filter_pins", function FilterPinsPublication(userID){
     var userId = this.userId
     return EmojiPins.find({owner: {$ne: userID}})
   })
+  Meteor.publish("logged_in_users", function LoggedInUsersPublication(){
+    return Meteor.users.find({_id: {$ne: this.userId}}, {fields: {profile: 1}})
+  });
   Meteor.publish('emoji_messages', function EmojiMessagesPublication() {
-    return EmojiMessages.find()
+    return EmojiMessages.find({receiverId: this.userId})
   })
 
 }
@@ -61,9 +49,7 @@ Meteor.methods({
 
     EmojiPins.remove(pinId);
   },
-  'emoji_messages.insert'(emojiId, receiverId) {
-
-    check(emojiId, String);
+  'emoji_messages.insert'(senderId, emojiId, receiverId) {
 
     // Make sure the user is logged in before inserting a task
     // if (! this.userId) {
@@ -71,6 +57,7 @@ Meteor.methods({
     //}
 
     EmojiMessages.insert({
+      sender: senderId,
       emojiId,
       createdAt: new Date(),
       receiverId,

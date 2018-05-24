@@ -25,6 +25,7 @@ class Map extends Component {
         lng: center.lng
       },
       zoom: 15,
+      emoji: '🔵'
     };
 
     this.renderEmojis = this.renderEmojis.bind(this)
@@ -60,7 +61,7 @@ class Map extends Component {
               pinclassname="userLocation"
               lat={this.props.mapCoords.coords.latitude}
               lng={this.props.mapCoords.coords.longitude}
-              reaction={this.props.emoji}
+              reaction={this.state.emoji}
             />
             {pins }
         </GoogleMapReact>
