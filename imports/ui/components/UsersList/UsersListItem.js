@@ -11,7 +11,7 @@ class UsersListItem extends React.Component {
   }
   handleClick = () => {
     //call the prop function that comes from App.js that sends the message to the user that was clicked on.
-    
+
     this.props.onSendMessage(this.props.user._id)
   }
   render() {
