@@ -5,6 +5,8 @@ import '../imports/api/api.js';
 
 Meteor.startup(() => {
   WebApp.rawConnectHandlers.use(function(req, res, next) { res.setHeader("Access-Control-Allow-Origin", "*"); return next(); });
+
+  Meteor.call('emoji_pins.start_pinremovetimer');
 });
 
 

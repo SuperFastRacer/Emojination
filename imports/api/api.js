@@ -8,8 +8,24 @@ export const EmojiMessages = new Mongo.Collection('emoji_messages')
 if (Meteor.isServer) {
   // This code only runs on the server
   Meteor.publish('emoji_pins', function EmojiPinsPublication() {
+
+
+
+    /*Meteor.setInterval((EmojiPins) => {
+      let date = new Date()
+      let currenttime = date.getTime();
+      console.log("Timeout called after three seconds...");
+      this.EmojiPins.deleteMany({
+        $where: function() {
+          return ((currenttime - this.createdAt) > 10000  ) //delete any pins older than 20 minutes
+        }
+      })
+      return EmojiPins.find()
+    }, 3000);*/
     return EmojiPins.find()
+
   })
+
   Meteor.publish("filter_pins", function FilterPinsPublication(userID){
     var userId = this.userId
     return EmojiPins.find({owner: {$ne: userID}})
@@ -17,6 +33,7 @@ if (Meteor.isServer) {
   Meteor.publish('emoji_messages', function EmojiMessagesPublication() {
     return EmojiMessages.find()
   })
+
 }
 
 Meteor.methods({
@@ -28,11 +45,13 @@ Meteor.methods({
     // if (! this.userId) {
     //  throw new Meteor.Error('not-authorized');
     //}
+    let d = new Date()
+    let timestamp = d.getTime();
 
     EmojiPins.insert({
       owner: userId,
       emojiId,
-      createdAt: new Date(),
+      createdAt: timestamp,
       latitude,
       longitude
     });
@@ -63,5 +82,15 @@ Meteor.methods({
 
     EmojiMessages.update(emojiMessageId, { $set: { read: setChecked } });
 
+  },
+  'emoji_pins.start_pinremovetimer'() {
+    Meteor.setInterval(() => {
+      let date = new Date()
+      let currenttime = date.getTime();
+
+      EmojiPins.remove({
+        createdAt: { $lt: currenttime - 15000}
+      })
+    }, 3000);
   }
 });
