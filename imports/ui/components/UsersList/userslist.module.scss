@@ -52,17 +52,37 @@
     text-align: center;
   }
 }
+
+@keyframes example {
+ 
+  100% {border: 5px solid black;}
+}
+
+
+
 .userslist_item {
   width: 50%;
   height: auto;
   margin: 3px;
-  background-color: pink;
   display: table-row;
 
   img {
     width: 100%;
+    box-sizing: border-box;
+    animation: example 1.5s 1;
+    animation-play-state: paused;
+    border-radius: 50%; 
+    height: 196px;
+    margin-top: 4vh;
+    
+  
+  }
+  img:hover {
+    animation-play-state: running;
   }
   
 }
+
+
 
 /*The modal "window"*/
