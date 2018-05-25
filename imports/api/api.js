@@ -67,7 +67,7 @@ Meteor.methods({
   'emoji_messages.markAsread'(emojiMessageId) {
     check(emojiMessageId, String)
 
-    EmojiMessages.update(emojiMessageId, { $set: { read: setChecked } });
+    EmojiMessages.remove(emojiMessageId);
 
   },
   'emoji_pins.start_pinremovetimer'() {

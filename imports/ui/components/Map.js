@@ -3,11 +3,33 @@ import GoogleMapReact from 'google-map-react';
 import UserLocation from './UserLocation';
 import geolocation from 'react-geolocation';
 import Delay from 'react-delay'
+import { Spring, Keyframes, animated } from 'react-spring'
+import { TimingAnimation, Easing } from 'react-spring/dist/addons.cjs'
 
 import './map.module.scss';
 
 
-const UserReaction = (props) => <span className={props.pinclassname? props.pinclassname : "emojiMapPin"}>{props.reaction}</span>;
+/*<Spring
+  from={{ opacity: 0, fontSize: 10 }} to={{ opacity: 1, fontSize: 22 }} config={{tension: 180, friction: 12}}>
+  {styles => <span className={"emojiMapPin"} style={styles}>{this.props.reaction}</span>}
+</Spring>*/
+class UserReaction extends Component {
+  constructor(props) {
+    super(props)
+  }
+  render() {
+    return (
+      this.props.pinclassname?
+      <span className={this.props.pinclassname}>{this.props.reaction}</span>
+      :
+      <Spring
+        from={{ opacity: 0, fontSize: 10 }} to={{ opacity: 1, fontSize: 22 }} config={{tension: 180, friction: 12}}>
+        {styles => <span className={"emojiMapPin"} style={styles}>{this.props.reaction}</span>}
+      </Spring>
+    )
+  }
+}
+//const UserReaction = (props) => <span className={props.pinclassname? props.pinclassname : "emojiMapPin"}>{props.reaction}</span>;
 
 class Map extends Component {
 
