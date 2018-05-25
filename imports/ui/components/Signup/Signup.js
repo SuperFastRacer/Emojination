@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withHistory, Link } from "react-router-dom";
 import { Accounts } from "meteor/accounts-base";
 import PropTypes from "prop-types";
-import "./signup.scss";
+import "./signup.module.scss";
 
 class Signup extends Component {
   constructor(props) {
@@ -78,12 +78,14 @@ class Signup extends Component {
           )}
 
           <div className="center">
-            <input
+            <button
               type="submit"
               id="login-button"
-              className="waves-effect waves-light btn signup-btn"
               value="Sign Up"
-            />
+              className="btn waves-effect waves-light login-btn"
+            >
+              Sign Up
+            </button>
           </div>
           <div className="center">
             <p>
