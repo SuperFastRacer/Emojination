@@ -93,7 +93,6 @@ class Login extends Component {
       this.y = randomInt(0, wh);
       this.emoji = self.getRandomEmoji();
       this.fontSize = randomInt(24, 62);
-      ize = randomInt(30, 64);
       this.color = "rgba(255,255,255,0." + this.fontSize + ")";
 
       //this.opacity = self.setOpacity();
@@ -143,20 +142,20 @@ class Login extends Component {
       ctx.clearRect(0, 0, ww, wh);
     }
     function createEmojis() {
-      for (i = 0; i < partCount; i++) {
+      for (let i = 0; i < partCount; i++) {
         var p = new emoji();
         emojis.push(p);
       }
     }
     function drawEmojis() {
-      for (i = 0; i < emojis.length; i++) {
-        p = emojis[i];
+      for (let i = 0; i < emojis.length; i++) {
+        let p = emojis[i];
         p.draw();
       }
     }
     function updateEmojis() {
-      for (var i = emojis.length - 1; i >= 0; i--) {
-        p = emojis[i];
+      for (let i = emojis.length - 1; i >= 0; i--) {
+        let p = emojis[i];
         p.float();
         p.boundaryCheck();
       }

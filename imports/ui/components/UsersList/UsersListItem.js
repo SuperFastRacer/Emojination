@@ -33,7 +33,7 @@ class UsersListItem extends React.Component {
     //map messages, if any, to span tags containing the message
     return (
       <div onClick={this.handleClick}className="userslist_item">
-        <img src={this.props.user.profile.picture}/>
+        <div className="image_container"><img src={this.props.user.profile.picture}/></div>
         <span>{this.props.user.profile.name}</span>
         {/*this.props.userMessages?
           this.props.userMessages.map(message => {

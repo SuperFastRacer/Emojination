@@ -5,22 +5,26 @@
   height: 100vh;
   width: 20%;
   right: 0px;
-  background-color: rgba(106, 190, 167, 0.6);
+  top: 48px;
+  background-color: rgba(255, 255, 255, 0.6);
   padding: 0;
   z-index: 3;
   overflow-y: auto;
-  
+
 
   .users_list__modal{
     position: absolute;
-    top:0;
+    top: 48px;
     background-color: #B1D7CC;
     border-radius: 5px;
     height: 100vh;
     width: 100%;
     margin: 0px auto;
     padding: 30px;
-    display: table;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 3em;
   }
   .close{
     position: absolute;
@@ -39,7 +43,7 @@
     text-align:center;
     vertical-align: middle;
     display: table-cell;
-    font-size: 20pt; 
+    font-size: 20pt;
   }
 
   img {
@@ -54,33 +58,53 @@
 }
 
 @keyframes example {
- 
+
   100% {border: 5px solid black;}
+}
+@keyframes borderpulsate {
+    0%   { border-color: rgba(255, 255, 255, 1); }
+    100%   { border-color: rgba(255, 40, 0, 1); }
+    //100% { border-color: rgba(255, 255, 255, 1); }
 }
 
 
 
 .userslist_item {
-  width: 50%;
+  width: 100%;
   height: auto;
-  margin: 3px;
-  display: table-row;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .image_container {
+    margin-top: 10px;
+    height: 90px;
+    width: 90px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #fff;
+    &:hover  {
+      animation: borderpulsate 0.5s;
+    }
+    img {
+      display: inline;
+      margin: 0 auto;
+      height: 100%;
+      width: auto;
+      //animation: example 1.5s 1;
+      //animation-play-state: paused;
 
-  img {
-    width: 100%;
-    box-sizing: border-box;
-    animation: example 1.5s 1;
-    animation-play-state: paused;
-    border-radius: 50%; 
-    height: 196px;
-    margin-top: 4vh;
-    
-  
+
+    }
+    img:hover {
+      //animation-play-state: running;
+    }
   }
-  img:hover {
-    animation-play-state: running;
+  span {
+    text-transform: capitalize;
   }
-  
+
+
 }
 
 
