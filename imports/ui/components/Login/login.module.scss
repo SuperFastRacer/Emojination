@@ -4,13 +4,14 @@ body {
 }
 
 .login-container {
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
 .login-header {
-  //margin-top: 20%;
+  margin-top: 5%;
   text-align: center;
 }
 
@@ -31,6 +32,10 @@ body {
   align-items: center;
   justify-content: center;
 }
+.google-logo {
+  margin-left: 5px;
+  height: 18px;
+}
 
 .social-media-container .facebook-btn {
   background-color: #2d9cdb;
@@ -42,6 +47,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.facebook-logo {
+  margin-left: 4px;
+  height: 26px;
 }
 
 .login-form {
@@ -60,6 +70,11 @@ body {
   width: 250px;
   height: 25px;
   margin: 15px;
+  ::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #666;
+    opacity: 1; /* Firefox */
+  }
 }
 
 .login-btn {
@@ -83,6 +98,31 @@ body {
   display: block;
   //width: 100px;
   height: 82px;
-  background: url(../../../../public/Frame.svg);
+  /*background: url("/public/Emojination_logo.svg");*/
+  //background: url("/Emojination_logo.svg");
+
   background-size: 150%;
+}
+
+@media only screen and (max-width: 768px) {
+  .social-media-container .google-btn {
+    width: 60vw;
+    height: 15vw;
+    margin: 1.5vh;
+  }
+
+  .social-media-container .facebook-btn {
+    width: 60vw;
+    height: 15vw;
+    margin: 1.5vh;
+  }
+
+  .login-form {
+    margin-top: 2vh;
+  }
+  .input {
+    width: 60vw;
+    height: 12vw;
+    margin: 1vh;
+  }
 }
