@@ -1,7 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Spring } from 'react-spring'
 import './userslist.module.scss';
+
+class IncomingMessage extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
+  render() {
+    return(
+      <Spring from={{ opacity: 0, fontSize: 20 }} to={{ opacity: 1, fontSize: 40 }} config={{tension: 180, friction: 12}}>
+        {styles => <span className="incoming_message" style={styles}>{this.props.message}</span>}
+      </Spring>
+    )
+  }
+}
 class UsersListItem extends React.Component {
   constructor(props) {
     super(props)
@@ -16,19 +31,18 @@ class UsersListItem extends React.Component {
   }
   render() {
     //map messages, if any, to span tags containing the message
-    const messages = this.props.userMessages?
-      this.props.userMessages.map(message => {
-        return (
-          <span key={message._id}>{message.emojiId}</span>
-        )
-      })
-      :
-      ""
     return (
       <div onClick={this.handleClick}className="userslist_item">
         <img src={this.props.user.profile.picture}/>
         <span>{this.props.user.profile.name}</span>
-        {messages}
+        {/*this.props.userMessages?
+          this.props.userMessages.map(message => {
+            return (
+              <IncomingMessage key={message._id} message={message.emojiId} />
+            )
+          })
+          :
+          ""*/}
       </div>
     );
   }

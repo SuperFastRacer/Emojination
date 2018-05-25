@@ -16,7 +16,46 @@ import Modal from "./Modal/Modal";
 import UsersList from "./UsersList/UsersList";
 import EmojiKeyboard from "./emojiKeyboard/emojiKeyboard";
 
+import { Spring, Keyframes, animated } from 'react-spring'
+import { TimingAnimation, Easing } from 'react-spring/dist/addons.cjs'
+
 import "./Topbar.scss";
+
+class IncomingMessage extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+  handleunmount() {
+    Meteor.call('emoji_messages.markAsread', this.props.messageId)
+  }
+  render() {
+    let _this = this;
+    return(
+      <Keyframes
+        native
+        script={async next => {
+          // None of this will cause React to render, the component renders only once :-)
+            let a = Math.floor((Math.random() * 400) + 200)
+            await next(Spring, {
+              from: {bottom: 0, left:Math.floor((Math.random() * 400) + 30),  opacity: 0},
+              to: { bottom: a , opacity: 1},
+              config: {tension: 40, friction: 4}
+            })
+            await next(Spring, {
+              to: { bottom: (a + 50), opacity: 0},
+              config: {tension: 180, friction: 14}
+            })
+            _this.handleunmount()
+            //await next(Spring, { to: { fontSize: 18 }, config: { easing: Easing.inout } })
+          }
+        }>
+        {props => <animated.div className={"incoming_message"} style={{...props }}>
+        <div className="imagecropper"><img src={this.props.sendingUser.profile.picture}/></div><span>{this.props.message}</span>
+      </animated.div>}
+      </Keyframes>
+    )
+  }
+}
 
 class App extends Component {
   constructor(props) {
@@ -232,12 +271,21 @@ class App extends Component {
               ("")
             }
             {this.state.isUsersListOpen ?
-              (<UsersList onClose={this.toggleUsersList} users={this.props.usersList} messages={this.props.emojiMessages} onSendMessage={this.sendMessageToServer}/>)
+              (<UsersList onClose={this.toggleUsersList} users={this.props.usersList} onSendMessage={this.sendMessageToServer}/>)
               :
               ("")
             }
 
             <EmojiKeyboard onEmojiClick={this.setEmojiToSend}/>
+            {this.props.emojiMessages?
+              this.props.emojiMessages.map(message => {
+                let sender = this.props.usersList.find(user => user._id == message.sender)
+                return (
+                  <IncomingMessage key={message._id} message={message.emojiId} messageId={message._id} sendingUser={sender}/>
+                )
+              })
+              :
+              ""}
           </div>
         ) : (
           ""
@@ -252,7 +300,7 @@ export default withTracker(() => {
   Meteor.subscribe("logged_in_users");
   return {
     emojiPins: EmojiPins.find({owner: { $ne: Meteor.userId() } }).fetch(),
-    emojiMessages: EmojiMessages.find({}).fetch(), //TODO: add filtering so that only messages belonging to the user are fetched.
+    emojiMessages: EmojiMessages.find({receiverId: Meteor.userId() }).fetch(), //TODO: add filtering so that only messages belonging to the user are fetched.
     currentUser: Meteor.user(),
     usersList: Meteor.users.find({_id: { $ne: Meteor.userId() } }).fetch()
   };
