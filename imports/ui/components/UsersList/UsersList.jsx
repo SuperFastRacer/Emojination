@@ -15,10 +15,10 @@ class UsersList extends React.Component {
     const userslist = this.props.users.map(userId => {
 
       //filter out messages that come from the specific user to be rendered in the map function
-      const messagesFromUser = this.props.messages.filter(message => message.sender == userId._id)
+      //const messagesFromUser = this.props.messages.filter(message => message.sender == userId._id)
       return (
         //return a user item that will contain the data about the user as well as messages sent from that user, if any.
-        <UsersListItem key={userId._id} user={userId} onSendMessage={this.props.onSendMessage} userMessages={messagesFromUser? messagesFromUser : ""}/>
+        <UsersListItem key={userId._id} user={userId} onSendMessage={this.props.onSendMessage}/>
       )
     })
     return (
