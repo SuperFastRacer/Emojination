@@ -92,7 +92,8 @@ class Login extends Component {
       this.x = randomInt(0, ww);
       this.y = randomInt(0, wh);
       this.emoji = self.getRandomEmoji();
-      this.fontSize = randomInt(30, 64);
+      this.fontSize = randomInt(24, 62);
+      ize = randomInt(30, 64);
       this.color = "rgba(255,255,255,0." + this.fontSize + ")";
 
       //this.opacity = self.setOpacity();
@@ -199,15 +200,21 @@ class Login extends Component {
 
         <div className="login-header">
           {/*<h1 className="">Login</h1>*/}
-          <img src="../../../../Frame.svg" alt="text" />
+          <img src="Emojination_logo.svg" alt="text" />
         </div>
 
         <div className="social-media-container">
           <div className="google-btn" onClick={this.handleGoogleLogin}>
-            <p>Google login</p>
+            <p>Login with </p>
+            <img className="google-logo" src="/Google_logo.png" alt="Google" />
           </div>
           <div className="facebook-btn" onClick={this.handleFacebookLogin}>
-            <p>Facebook login</p>
+            <p>Login with</p>
+            <img
+              className="facebook-logo"
+              src="/Facebook_logo.svg"
+              alt="Facebook"
+            />
           </div>
         </div>
 
