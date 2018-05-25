@@ -85,14 +85,14 @@ class Login extends Component {
     var wh = $(window).height();
     canvas.width = ww;
     canvas.height = wh;
-    var partCount = 50;
+    var partCount = 30;
     var emojis = [];
 
     function emoji() {
       this.x = randomInt(0, ww);
       this.y = randomInt(0, wh);
       this.emoji = self.getRandomEmoji();
-      this.fontSize = randomInt(30, 78);
+      this.fontSize = randomInt(30, 64);
       this.color = "rgba(255,255,255,0." + this.fontSize + ")";
 
       //this.opacity = self.setOpacity();
