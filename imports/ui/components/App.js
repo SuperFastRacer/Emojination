@@ -70,7 +70,7 @@ class App extends Component {
       isOpen: false,
       isUsersListOpen: false,
       coords: undefined,
-      emoji: '🔵'
+      emoji: '😂'
     };
 
     this.sendMessageToServer = this.sendMessageToServer.bind(this)
