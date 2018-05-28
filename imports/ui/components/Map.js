@@ -47,7 +47,7 @@ class Map extends Component {
         lng: center.lng
       },
       zoom: 15,
-      emoji: '🔵'
+      emoji: '😂'
     };
 
     this.renderEmojis = this.renderEmojis.bind(this)
