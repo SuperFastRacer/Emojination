@@ -47,7 +47,7 @@ class Map extends Component {
         lng: center.lng
       },
       zoom: 15,
-      emoji: '😂'
+      emoji: '🔵'
     };
 
     this.renderEmojis = this.renderEmojis.bind(this)
@@ -55,7 +55,6 @@ class Map extends Component {
 
   renderEmojis() {
     let _this = this
-    console.log(this.props.emojiPins)
     return this.props.emojiPins.map(pin =>
     <UserReaction key={pin._id} lat={pin.latitude} lng={pin.longitude} reaction={pin.emojiId}/>);
   }
